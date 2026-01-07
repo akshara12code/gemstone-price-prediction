@@ -1,0 +1,22 @@
+artifact_path: file:///D:/VIT/Machine Learning/ineuron/mlruns/0/models/m-4983147d70d44ed1a9287a0bbdb80b0e/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.11.14
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.8.0
+mlflow_version: 3.8.1
+model_id: m-4983147d70d44ed1a9287a0bbdb80b0e
+model_size_bytes: 597
+model_uuid: m-4983147d70d44ed1a9287a0bbdb80b0e
+prompts: null
+run_id: bb6fed67f38f497f9741d43fd90fe0d5
+utc_time_created: '2026-01-07 17:17:16.280202'
