@@ -1,0 +1,13 @@
+services:
+  application:
+    build: .
+    image: ineuron-application
+    container_name: gemstone-prediction
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./src:/opt/airflow/src
+    environment:
+      - PYTHONPATH=/opt/airflow:/opt/airflow/src
