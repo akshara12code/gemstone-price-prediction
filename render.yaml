@@ -1,5 +1,5 @@
 services:
-  # Flask Application
+  # Flask Application ONLY (no Airflow on Render)
   - type: web
     name: gemstone-flask
     env: docker
@@ -7,11 +7,3 @@ services:
     region: oregon
     plan: free
     healthCheckPath: /
-
-  # Airflow Service
-  - type: web
-    name: gemstone-airflow
-    env: docker
-    dockerfilePath: ./Dockerfile
-    region: oregon
-    plan: free
