@@ -1,14 +1,50 @@
-FROM python:3.8-slim-buster
+FROM python:3.10-slim-buster
+
 USER root
+
+# Install system dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    build-essential \
+    libpq-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create app directory
 RUN mkdir /app
-COPY . /app/
 WORKDIR /app/
-RUN pip3 install -r requirements.txt
+
+# Copy only Airflow-specific requirements first
+COPY requirements_airflow.txt requirements.txt
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+# Copy application files
+COPY . /app/
+
+# Set Airflow environment variables
 ENV AIRFLOW_HOME="/app/airflow"
-ENV AIRFLOW_CORE_DAGBAG_IMPORT_TIMEOUT=1000
-ENV AIRFLOW_CORE_ENABLE_XCOM_PICKLING=True
+ENV AIRFLOW__CORE__DAGBAG_IMPORT_TIMEOUT=1000
+ENV AIRFLOW__CORE__ENABLE_XCOM_PICKLING=True
+ENV AIRFLOW__CORE__LOAD_EXAMPLES=False
+ENV AIRFLOW__CORE__DAGS_FOLDER=/app/airflow/dags
+
+# Initialize Airflow database
 RUN airflow db init
-RUN airflow users create -e akshara12082005@gmail.com -f akshara -l srivastava -p admin -r Admin -u admin
+
+# Create admin user
+RUN airflow users create \
+    -e akshara12082005@gmail.com \
+    -f akshara \
+    -l srivastava \
+    -p admin \
+    -r Admin \
+    -u admin
+
+# Make start script executable
 RUN chmod 777 start.sh
-ENTRYPOINT [ "/bin/sh" ]
+
+# Expose port
+EXPOSE 8080
+
+ENTRYPOINT ["/bin/sh"]
 CMD ["start.sh"]
