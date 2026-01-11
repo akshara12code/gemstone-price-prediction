@@ -1,0 +1,17 @@
+services:
+  # Flask Application
+  - type: web
+    name: gemstone-flask
+    env: docker
+    dockerfilePath: ./Dockerfile.flask
+    region: oregon
+    plan: free
+    healthCheckPath: /
+
+  # Airflow Service
+  - type: web
+    name: gemstone-airflow
+    env: docker
+    dockerfilePath: ./Dockerfile
+    region: oregon
+    plan: free

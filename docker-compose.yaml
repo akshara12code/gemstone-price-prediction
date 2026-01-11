@@ -11,3 +11,13 @@ services:
       - ./src:/opt/airflow/src
     environment:
       - PYTHONPATH=/opt/airflow:/opt/airflow/src
+
+
+  flaskapp:
+    build:
+      context: ./
+      dockerfile: Dockerfile.flask
+    image: flaskimage
+    container_name: gemstone-prediction-flask
+    ports:
+      - "5000:5000"
