@@ -1,14 +1,916 @@
-<h1>HELLOEEEEEEE WELCOME TO MY PROJECT</h1>
-<!-- Airflow Access Section -->
-<div style="margin-top: 30px; padding: 20px; background: #e8f5e9; border-radius: 8px;">
-    <h3>🤖 Training Pipeline</h3>
-    <p>Access Airflow for model training and continuous integration</p>
-    <a href="http://localhost:8080" target="_blank">
-        <button style="background: #4CAF50; color: white; padding: 12px 24px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">
-            🚀 Open Airflow Dashboard
-        </button>
-    </a>
-    <p style="font-size: 12px; color: #666; margin-top: 10px;">
-        Note: Airflow must be running locally on port 8080
-    </p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gem Predict - Gemstone Valuation</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Montserrat', sans-serif;
+      overflow-x: hidden;
+    }
+    
+    .cormorant {
+      font-family: 'Cormorant Garamond', serif;
+    }
+    
+    .montserrat {
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .playfair {
+      font-family: 'Playfair Display', serif;
+    }
+    
+    .container {
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .background {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #654321 0%, #332211 100%);
+      background-size: cover;
+      background-position: center;
+    }
+    
+    .background-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(8px);
+    }
+    
+    .content {
+      position: relative;
+      z-index: 10;
+      min-height: 100vh;
+    }
+    
+    header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      opacity: 0;
+      transform: translateY(-40px);
+      transition: all 1s ease;
+    }
+    
+    header.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .logo {
+      color: white;
+      font-size: 1.5rem;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+    }
+    
+    nav {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+    
+    nav button {
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Montserrat', sans-serif;
+    }
+    
+    nav button:first-child {
+      padding: 0.5rem 1.5rem;
+      background: rgba(255, 255, 255, 0.9);
+      color: #1f2937;
+      border-radius: 9999px;
+    }
+    
+    nav button:hover {
+      color: white;
+      transform: scale(1.05);
+    }
+    
+    nav button:first-child:hover {
+      background: white;
+      box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+    }
+    
+    .social-icons {
+      display: flex;
+      gap: 0.75rem;
+    }
+    
+    .social-icon {
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .social-icon:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.1) rotate(12deg);
+    }
+    
+    .social-icon svg {
+      width: 1rem;
+      height: 1rem;
+      color: white;
+    }
+    
+    .main-content {
+      display: flex;
+      align-items: center;
+      min-height: 100vh;
+      padding: 8rem 3rem 3rem;
+    }
+    
+    .left-section {
+      flex: 1;
+      padding-right: 3rem;
+      opacity: 0;
+      transform: translateX(-80px);
+      transition: all 1s ease 0.3s;
+    }
+    
+    .left-section.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    
+    .left-content {
+      max-width: 36rem;
+    }
+    
+    h1 {
+      font-size: 5.5rem;
+      font-weight: 800;
+      color: white;
+      margin-bottom: 2rem;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .word-animate {
+      display: inline-block;
+      animation: slideUp 0.8s ease-out forwards;
+      opacity: 0;
+    }
+
+    .word-animate:nth-child(1) { animation-delay: 0.1s; }
+    .word-animate:nth-child(2) { animation-delay: 0.3s; }
+    .word-animate:nth-child(3) { animation-delay: 0.5s; }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .subtitle {
+      color: white;
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    
+    .description {
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+      font-weight: 400;
+    }
+    
+    .right-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      opacity: 0;
+      transform: translateX(80px);
+      transition: all 1s ease 0.5s;
+    }
+    
+    .right-section.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    
+    .card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      border-radius: 1.5rem;
+      padding: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.5s ease;
+    }
+    
+    .card:hover {
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      transform: scale(1.02);
+    }
+    
+    .gem-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+    
+    .gem-box {
+      aspect-ratio: 1;
+      background: linear-gradient(135deg, rgba(120, 53, 15, 0.4) 0%, rgba(51, 34, 17, 0.6) 100%);
+      border-radius: 1rem;
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.5s ease;
+    }
+    
+    .gem-box:hover {
+      transform: scale(1.05);
+    }
+    
+    .gem-box:nth-child(2) {
+      background: linear-gradient(135deg, rgba(146, 64, 14, 0.4) 0%, rgba(120, 53, 15, 0.6) 100%);
+    }
+    
+    .gem-icon {
+      width: 3rem;
+      height: 3rem;
+      color: rgba(251, 191, 36, 0.5);
+      animation: pulse 2s infinite;
+    }
+    
+    .gem-box:nth-child(2) .gem-icon {
+      animation-delay: 0.5s;
+      color: rgba(252, 211, 77, 0.5);
+    }
+
+    .gem-image {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .gem-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .gem-image:hover img {
+      transform: scale(1.1);
+    }
+    
+    .form-section {
+      color: white;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.01em;
+    }
+    
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-group label {
+      display: block;
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 0.875rem;
+      margin-bottom: 0.5rem;
+      transition: color 0.3s ease;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    .form-group:focus-within label {
+      color: white;
+    }
+    
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 0.5rem;
+      padding: 0.75rem 1rem;
+      color: white;
+      font-size: 1rem;
+      outline: none;
+      transition: all 0.3s ease;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 500;
+    }
+    
+    .form-group input::placeholder {
+      color: rgba(255, 255, 255, 0.4);
+    }
+    
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: rgba(255, 255, 255, 0.4);
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+    }
+    
+    .form-group select option {
+      background-color: #5c4033;
+      color: white;
+    }
+    
+    .submit-btn {
+      width: 100%;
+      background: white;
+      color: #1f2937;
+      font-weight: 700;
+      padding: 0.875rem;
+      border-radius: 9999px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+      font-family: 'Montserrat', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    
+    .submit-btn:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.9);
+      transform: scale(1.05);
+      box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+    }
+    
+    .submit-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* New Section Styles */
+    .second-section {
+      padding: 4rem 3rem;
+      display: flex;
+      gap: 2rem;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 1s ease;
+    }
+
+    .second-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .discover-card {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      border-radius: 1.5rem;
+      padding: 2.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.5s ease;
+    }
+
+    .discover-card:hover {
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      transform: translateY(-5px);
+    }
+
+    .discover-title-small {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+      animation: fadeInLeft 0.8s ease-out;
+    }
+
+    .discover-title-large {
+      color: white;
+      font-size: 2.5rem;
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 2rem;
+      animation: fadeInLeft 0.8s ease-out 0.2s backwards;
+    }
+
+    .form-card {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      border-radius: 1.5rem;
+      padding: 2.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.5s ease;
+    }
+
+    .form-card:hover {
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Contact Section */
+.contact-section {
+  padding: 6rem 3rem;
+  background: #f7f3ec;
+}
+
+.contact-container {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  gap: 4rem;
+  align-items: center;
+}
+
+.contact-image img {
+  width: 420px;
+  height: 520px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.contact-content {
+  flex: 1;
+}
+
+.contact-title {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.contact-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-bottom: 1px solid #222;
+  background: transparent;
+  font-size: 1rem;
+  outline: none;
+}
+
+.contact-form textarea {
+  resize: none;
+  height: 100px;
+}
+
+.contact-form button {
+  width: fit-content;
+  padding: 12px 28px;
+  border-radius: 999px;
+  background: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.contact-info {
+  margin-top: 2rem;
+  font-size: 0.95rem;
+}
+
+.contact-socials {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.contact-socials a {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid #222;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.contact-socials a:hover {
+  background: black;
+}
+
+.contact-socials svg {
+  width: 18px;
+  height: 18px;
+  color: #222;
+}
+
+.contact-socials a:hover svg {
+  color: white;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .contact-container {
+    flex-direction: column;
+  }
+
+  .contact-image img {
+    width: 100%;
+    height: 420px;
+  }
+
+
+    @keyframes fadeInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+    
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.5;
+      }
+    }
+}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="background">
+      <div class="background-overlay"></div>
+    </div>
+    
+    <div class="content">
+      <header id="header">
+        <div class="logo cormorant">gempredictAI</div>
+        
+        <nav class="montserrat">
+          <button>Home</button>
+          <button id="serviceBtn">Services</button>
+
+          <button id="contactBtn">Contact</button>
+
+        </nav>
+        
+        <div class="social-icons">
+  <a href="https://github.com/akshara12code" target="_blank" class="social-icon">
+    <i data-lucide="github"></i>
+  </a>
+  <a href="https://www.linkedin.com/in/akshara-srivastava-3572052a6/" target="_blank" class="social-icon">
+    <i data-lucide="linkedin"></i>
+  </a>
+  <a href="https://netflix-portfolio-ay4h.vercel.app/" target="_blank" class="social-icon">
+    <i data-lucide="contact"></i>
+  </a>
 </div>
+      </header>
+      
+      <div class="main-content">
+        <div class="left-section" id="leftSection">
+          <div class="left-content">
+            <h1 class="playfair">
+              <span class="word-animate">PRECIOUS</span><br/>
+              <span class="word-animate">GEMSTONE</span><br/>
+              <span class="word-animate">VALUATION</span>
+            </h1>
+            
+            <div>
+              <h2 class="subtitle montserrat">Gem Predict AI</h2>
+              <p class="description montserrat">
+                Our advanced AI technology will provide an accurate valuation of your precious gemstones, 
+                preserving wonderful moments of high feelings for many years.
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="right-section" id="rightSection">
+          <div class="card">
+            <div class="gem-grid">
+              <div class="gem-box gem-image">
+                <img src="{{ url_for('static', filename='images/gem1.jpg') }}">
+
+              </div>
+              <div class="gem-box gem-image">
+                <img src="{{ url_for('static', filename='images/gem2.jpg') }}">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- New Second Section -->
+      <div class="second-section" id="secondSection">
+        <div class="discover-card">
+          <p class="discover-title-small montserrat">DISCOVER THE TRUE</p>
+          <h2 class="discover-title-large playfair">VALUE OF YOUR GEM</h2>
+          <div class="gem-grid">
+            <div class="gem-box gem-image">
+              <img src="{{ url_for('static', filename='images/gem3.jpg') }}">
+            </div>
+            <div class="gem-box gem-image">
+             <img src="{{ url_for('static', filename='images/gem4.jpg') }}">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-card" id="formSection">
+          <h3 class="form-section playfair">Enter Gemstone Details</h3>
+          
+          <form action="{{ url_for('predict_datapoint') }}" method="POST">
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="montserrat">Carat</label>
+                <input type="text" id="carat" name="carat" placeholder="Enter carat value" required>
+              </div>
+              
+              <div class="form-group">
+                <label class="montserrat">Depth</label>
+                <input type="text" id="depth" name="depth" placeholder="Enter depth value" required>
+              </div>
+              
+              <div class="form-group">
+                <label class="montserrat">Table</label>
+                <input type="text" id="table" name="table" placeholder="Enter table value" required>
+              </div>
+              
+              <div class="form-group">
+                <label class="montserrat">X</label>
+                <input type="text" id="x" name="x" placeholder="Enter x value" required>
+              </div>
+              
+              <div class="form-group">
+                <label class="montserrat">Y</label>
+                <input type="text" id="y" name="y" placeholder="Enter y value" required>
+              </div>
+              
+              <div class="form-group">
+                <label class="montserrat">Z</label>
+                <input type="text" id="z" name="z" placeholder="Enter z value" required>
+              </div>
+              
+              <div class="form-group">
+                <label class="montserrat">Cut</label>
+                <select id="cut" name="cut" required>
+                  <option value="Fair">Fair</option>
+                  <option value="Good">Good</option>
+                  <option value="Very Good">Very Good</option>
+                  <option value="Premium">Premium</option>
+                  <option value="Ideal">Ideal</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label class="montserrat">Color</label>
+                <select id="color" name="color" required>
+                  <option value="D">D</option>
+                  <option value="E">E</option>
+                  <option value="F">F</option>
+                  <option value="G">G</option>
+                  <option value="H">H</option>
+                  <option value="I">I</option>
+                  <option value="J">J</option>
+                </select>
+              </div>
+              
+              <div class="form-group" style="grid-column: span 2;">
+                <label class="montserrat">Clarity</label>
+                <select id="clarity" name="clarity" required>
+                  <option value="I1">I1</option>
+                  <option value="SI2">SI2</option>
+                  <option value="SI1">SI1</option>
+                  <option value="VS2">VS2</option>
+                  <option value="VS1">VS1</option>
+                  <option value="VVS2">VVS2</option>
+                  <option value="VVS1">VVS1</option>
+                  <option value="IF">IF</option>
+                </select>
+              </div>
+            </div>
+            
+            <input type="submit" value="Get Valuation" class="submit-btn">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+    
+    // Fade in animations
+    setTimeout(() => {
+      document.getElementById('header').classList.add('visible');
+      document.getElementById('leftSection').classList.add('visible');
+      document.getElementById('rightSection').classList.add('visible');
+    }, 100);
+
+    // Scroll-triggered animation for second section
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.2 });
+
+    observer.observe(document.getElementById('secondSection'));
+  </script>
+  <!-- Contact Me Section -->
+
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+
+      {% if category == 'success' %}
+        <div style="
+          padding: 12px;
+          margin: 20px;
+          border-radius: 8px;
+          background: #4CAF50;
+          color: white;
+        ">
+      {% else %}
+        <div style="
+          padding: 12px;
+          margin: 20px;
+          border-radius: 8px;
+          background: #F44336;
+          color: white;
+        ">
+      {% endif %}
+
+          {{ message }}
+        </div>
+
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<!-- Contact Section -->
+<section class="contact-section" id="contact">
+  <div class="contact-container">
+
+    <!-- Contact Image -->
+    <div class="contact-image">
+      <img src="{{ url_for('static', filename='images/gem5.jpg') }}" alt="Contact">
+    </div>
+
+    <!-- Contact Content -->
+    <div class="contact-content">
+      <h2 class="contact-title playfair">Contact Me</h2>
+
+      <!-- Contact Form -->
+      <form id="contactForm" class="contact-form" method="POST" action="{{ url_for('send_email') }}">
+        <div class="contact-row">
+          <input type="text" name="name" placeholder="Full Name" required>
+          <input type="email" name="email" placeholder="E-mail" required>
+        </div>
+
+        <textarea name="message" placeholder="Message" required></textarea>
+
+        <button type="submit">Send Message</button>
+      </form>
+
+      
+
+
+    </div>
+  </div>
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const contactForm = document.getElementById("contactForm");
+
+  if (!contactForm) {
+    console.error("contactForm not found");
+    return;
+  }
+
+  contactForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    emailjs.sendForm(
+      "service_70k13tw",
+      "template_x906atw",
+      this,
+      "MK0NxiTcLBatiTOWM"
+    ).then(
+      () => {
+        alert("Message sent successfully!");
+        contactForm.reset();
+      },
+      (error) => {
+        console.error("EmailJS error:", error);
+        alert("Failed to send message");
+      }
+    );
+  });
+});
+</script>
+<script>
+  const button = document.getElementById('contactBtn');
+  const contactSection = document.getElementById('contact');
+
+  button.addEventListener('click', () => {
+    contactSection.scrollIntoView({ behavior: 'smooth' });
+  });
+
+   // Scroll to Services Section
+  const serviceButton = document.getElementById('serviceBtn');
+  const serviceSection = document.getElementById('secondSection');
+
+  serviceButton.addEventListener('click', () => {
+    serviceSection.scrollIntoView({ behavior: 'smooth' });
+  });
+</script>
+
+
+
+</body>
+</html>
+
+
+
+
