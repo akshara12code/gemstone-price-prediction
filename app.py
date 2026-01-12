@@ -1,15 +1,12 @@
-from flask import Flask, render_template, jsonify, request, redirect, flash
+from flask import Flask, render_template, jsonify, request, redirect, flash, send_from_directory
+
 from src.pipeline.prediction_pipeline import PredictionPipeline, CustomData
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-app = Flask(
-    __name__,
-    static_folder="static",
-    static_url_path="/static",
-    template_folder="templates"
-)
+app = Flask(__name__, template_folder="templates")
+
 
 # Secret key needed for flash messages
 app.secret_key = 'your_secret_key_here'
@@ -18,6 +15,13 @@ app.secret_key = 'your_secret_key_here'
 @app.route('/')
 def home_page():
     return render_template("index.html")
+
+@app.route('/gem/<int:gem_id>')
+def gem_image(gem_id):
+    if 1 <= gem_id <= 5:
+        return send_from_directory('.', f'gem{gem_id}.jpg')
+    else:
+        return "Image not found", 404
 
 
 # ------------------ Prediction Route ------------------
