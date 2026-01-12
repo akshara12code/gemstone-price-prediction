@@ -1,1 +1,107 @@
-<h1>DIMOND PRICE WILL BE {{final_result}}</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prediction Result - Gem Predict</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, #654321 0%, #332211 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    
+    .result-container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border-radius: 2rem;
+      padding: 3rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      text-align: center;
+      max-width: 600px;
+      width: 100%;
+      animation: fadeInScale 0.6s ease-out;
+    }
+    
+    @keyframes fadeInScale {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+    
+    .result-title {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    
+    .result-value {
+      font-family: 'Playfair Display', serif;
+      color: white;
+      font-size: 4rem;
+      font-weight: 800;
+      margin-bottom: 2rem;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .result-description {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    
+    .back-btn {
+      display: inline-block;
+      padding: 0.875rem 2rem;
+      background: white;
+      color: #1f2937;
+      text-decoration: none;
+      border-radius: 9999px;
+      font-weight: 700;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      transition: all 0.3s ease;
+    }
+    
+    .back-btn:hover {
+      background: rgba(255, 255, 255, 0.9);
+      transform: scale(1.05);
+      box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <div class="result-container">
+    <p class="result-title">Estimated Gemstone Value</p>
+    <h1 class="result-value">${{ final_result }}</h1>
+    <p class="result-description">
+      This is the predicted price for your gemstone based on the characteristics you provided. 
+      The valuation is powered by our advanced machine learning model.
+    </p>
+    <a href="{{ url_for('home_page') }}" class="back-btn">Calculate Another</a>
+  </div>
+</body>
+</html>
