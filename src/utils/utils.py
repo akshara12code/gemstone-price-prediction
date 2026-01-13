@@ -1,18 +1,13 @@
 import os
 import sys
-
-# Fix numpy._core issue
-import numpy
-if not hasattr(numpy, '_core'):
-    import numpy.core as _core
-    numpy._core = _core
-
 import pickle
+import numpy as np
 import pandas as pd
 from src.logger.logger import logging
 from src.exception.exception import CustomException as customexception
 from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
 
+# Suppress all warnings
 import warnings
 warnings.filterwarnings('ignore')
 
