@@ -54,15 +54,13 @@ The project is designed following **MLOps best practices**, ensuring reproducibi
 - **MLflow** – Experiment tracking & model registry
 - **DVC** – Data & model versioning
 - **CI/CD** – Automated testing & deployment
-- **Render** – Cloud deployment
+
 
 ### 🌐 Backend & UI
 - Flask
 - HTML, CSS
 
----
 
-## 🏗 Project Architecture
 
 
 
