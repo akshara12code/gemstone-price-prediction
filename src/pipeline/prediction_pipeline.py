@@ -8,25 +8,35 @@ from src.utils.utils import load_object
 class PredictionPipeline:
     def __init__(self):
         print("PredictionPipeline initialized")
-        # Remove the __new__ method entirely - it's not needed here
-    
-    def predict(self, features):  # Add features parameter
+        # Load models once during initialization
         try:
-            preprocessor_path = os.path.join("artifacts", "preprocessor.pkl")
-            model_path = os.path.join("artifacts", "model.pkl")
+            self.preprocessor_path = os.path.join("artifacts", "preprocessor.pkl")
+            self.model_path = os.path.join("artifacts", "model.pkl")
             
-            preprocessor = load_object(preprocessor_path)
-            model = load_object(model_path)
+            self.preprocessor = load_object(self.preprocessor_path)
+            self.model = load_object(self.model_path)
+            logging.info("Models loaded successfully")
+        except Exception as e:
+            logging.error(f"Error loading models: {str(e)}")
+            raise CustomException(e, sys)
+    
+    def predict(self, features):
+        try:
+            logging.info("Starting prediction")
             
             # Transform the input features
-            scaled_data = preprocessor.transform(features)
-            pred = model.predict(scaled_data)
+            scaled_data = self.preprocessor.transform(features)
+            logging.info(f"Data scaled: {scaled_data}")
+            
+            # Make prediction
+            pred = self.model.predict(scaled_data)
+            logging.info(f"Prediction made: {pred}")
             
             return pred
             
         except Exception as e:
+            logging.error(f"Prediction error: {str(e)}")
             raise CustomException(e, sys)
-
 
 class CustomData:
     def __init__(self,
@@ -68,5 +78,5 @@ class CustomData:
             return df
             
         except Exception as e:
-            logging.info('Exception Occured in prediction pipeline')
+            logging.info('Exception Occurred in prediction pipeline')
             raise CustomException(e, sys)
