@@ -1,13 +1,7 @@
-# Core dependencies with compatible versions
 numpy==1.26.4
-pandas==2.0.3
+pandas==2.1.4
 scikit-learn==1.8.0
-
-# Flask and server
 flask==3.0.0
-flask-cors==4.0.0
 gunicorn==21.2.0
-
-# If you need these
-werkzeug==3.0.1
-jinja2==3.1.2
+seaborn
+matplotlib
