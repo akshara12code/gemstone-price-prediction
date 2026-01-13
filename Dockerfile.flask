@@ -5,13 +5,12 @@ WORKDIR /app
 # Copy ONLY production requirements (not full requirements.txt)
 COPY requirements_production.txt requirements.txt
 
-# Install system dependencies and Python packages with numpy fix
+# Install system dependencies and Python packages
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends \
         gcc \
         g++ \
-    && pip uninstall -y numpy || true \
-    && pip install --no-cache-dir numpy==1.23.5 \
+    && pip install --upgrade pip \
     && pip install --no-cache-dir -r requirements.txt \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
