@@ -6,6 +6,8 @@ import pandas as pd
 from src.logger.logger import logging
 from src.exception.exception import CustomException as customexception
 from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
+import warnings
+warnings.filterwarnings('ignore')
 
 def save_object(file_path, obj):
     try:
